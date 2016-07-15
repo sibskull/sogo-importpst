@@ -1,0 +1,87 @@
+#!/bin/bash -xeC
+
+readonly PROG=sogo-dsync-readpst
+
+# For now, our goal is a one-way import of per-user PST files into SOGo.
+#
+# A PST contains recursive mail folders, contacts, calendars, etc.
+#
+# The interface of our command is supposed to mimic the options
+# of dovecot's dsync <http://wiki2.dovecot.org/Tools/Doveadm/Sync>,
+# but we haven't implemented all the relevant options yet.
+#
+# Current limitations:
+#
+# * works for a single user only (can be specified by the -u option);
+# * does not handle anything except mail (i.e., does the dovecot import only).
+#
+# Related issues -- to be handled elsewhere (not in our import script):
+#
+# * Make sure to configure the "special-use" folders in dovecot
+#   (like "Incoming", "Sent", "Trash", "Spam") so that their names
+#   match the corresponding folder names in your .pst files (e.g.,
+#   "Входящие", etc) -- as documented at <http://wiki2.dovecot.org/MailboxSettings>.
+#   So that the clients won't be confused by the new server.
+#
+# * <http://wiki2.dovecot.org/MailboxSettings> also documents the "autoexpunge"
+#   feature, which may be useful for various folders including "Spam" (e.g.,
+#   autoexpunge = 10d).
+#
+# * Make sure to configure the separator for hierarchical folders
+#   to be the same as was used before by the Exchange clients
+#   (perhaps, separator = "\\"; as at <http://wiki2.dovecot.org/Namespaces>),
+#   so that they won't be confused by the new server.
+#   (This must not be a serious issue--even if different, because
+#   IMAP just announces the currently used separator.)
+#   (BTW, this setting affects neither the storage layout in dovecot internally
+#   nor in the dirs that would be extracted from .pst by readpst and imported).
+
+case "$1" in
+    -u) shift
+        readonly USER_MASK="$1"; shift
+        ;;
+esac
+readonly PST_LOCATION="$1"; shift
+
+if ! [[ "$READPST_ROOT" ]]; then
+    #READPST_ROOT="$(mktemp --tmpdir --directory readpst.XXXXXXXX)"
+    # Easier to find the intermediate results (in case of a failure):
+    READPST_ROOT="$TMPDIR"/readpst
+fi
+readonly READPST_ROOT
+readonly readpst_location="$READPST_ROOT"/"$PST_LOCATION"
+
+if [[ -e "$readpst_location" ]]; then
+    printf '%s: Refusing to overwrite an already existing temporary output dir: %s\n' \
+        "$PROG" \
+        "$readpst_location"
+    exit 1
+fi
+mkdir -p "$readpst_location"
+
+# readpst <http://www.five-ten-sg.com/libpst/rn01re01.html>
+# (-D is optional: Include deleted items in the output.)
+readpst -w -o "$readpst_location" -r -D "$PST_LOCATION"
+
+# For debugging:
+READPST_ROOT_ORIG="$(mktemp --directory "$READPST_ROOT".orig.XXXXXXXX)"
+readonly READPST_ROOT_ORIG
+cp -a --reflink=auto "$readpst_location" "$READPST_ROOT_ORIG"/"$PST_LOCATION"
+
+# :DIRNAME=mbox is to match the layout of "readpst -r".
+# (This will create folders as named in the PST file,
+# and will put all emails in a file called "mbox" inside each folder.)
+#
+# :INDEX=MEMORY is used because this data is temporary and
+# the indexes would be thrown away anyway.
+dsync -v \
+    ${USER_MASK:+-u "$USER_MASK"} \
+    -1 -R \
+    mbox:"$readpst_location":DIRNAME=mbox:INDEX=MEMORY
+
+# We'd like dovecot not to insert extra fields (UID, Length)
+# into the temporary data (not to waste time). Check this:
+
+# Debugging:
+printf '%s: The UNWANTED differences that dsync has written to the source PST dir:\n'
+diff -r "$READPST_ROOT_ORIG"/"$PST_LOCATION" "$readpst_location"
