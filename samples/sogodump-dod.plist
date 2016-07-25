@@ -1,0 +1,279 @@
+{
+    preferences = (
+        {
+            AuxiliaryMailAccounts = (
+            );
+            LocaleCode = en;
+            SOGoAlternateAvatar = none;
+            SOGoAppointmentSendEMailNotifications = <*I0>;
+            SOGoCalendarCategories = (
+                Customer,
+                Calls,
+                Favorites,
+                Meeting,
+                Ideas,
+                Miscellaneous,
+                Birthday,
+                Anniversary,
+                Vacation,
+                Travel,
+                Projects,
+                Suppliers,
+                Gifts,
+                Clients,
+                Issues,
+                Business,
+                Holidays,
+                Personal,
+                Status,
+                Competition,
+                "Follow up",
+                "Public Holiday"
+            );
+            SOGoCalendarCategoriesColors = {
+                Anniversary = "#CCCCCC";
+                Birthday = "#CCCCCC";
+                Business = "#CCCCCC";
+                Calls = "#FFCC33";
+                Clients = "#CCCCCC";
+                Competition = "#CCCCCC";
+                Customer = "#CCCCCC";
+                Favorites = "#CCCCCC";
+                "Follow up" = "#CCCCCC";
+                Gifts = "#CCCCCC";
+                Holidays = "#CCCCCC";
+                Ideas = "#CCCCCC";
+                Issues = "#CCCCCC";
+                Meeting = "#CCCCCC";
+                Miscellaneous = "#CCCCCC";
+                Personal = "#CCCCCC";
+                Projects = "#CCCCCC";
+                "Public Holiday" = "#CCCCCC";
+                Status = "#CCCCCC";
+                Suppliers = "#CCCCCC";
+                Travel = "#CCCCCC";
+                Vacation = "#CCCCCC";
+            };
+            SOGoCalendarDefaultReminder = NONE;
+            SOGoCalendarEventsDefaultClassification = PUBLIC;
+            SOGoCalendarTasksDefaultClassification = PUBLIC;
+            SOGoCalendarWeekdays = (
+                SU,
+                MO,
+                TU,
+                WE,
+                TH,
+                FR,
+                SA
+            );
+            SOGoContactsCategories = (
+                " Business Partner",
+                " Competitor",
+                " Customer",
+                " Family",
+                " Friend",
+                " Press",
+                " Provider",
+                " VIP",
+                Colleague
+            );
+            SOGoDayEndTime = "18:00";
+            SOGoDayStartTime = "08:00";
+            SOGoDefaultCalendar = selected;
+            SOGoFirstDayOfWeek = <*I0>;
+            SOGoFirstWeekOfYear = January1;
+            SOGoGravatarEnabled = <*I0>;
+            SOGoLanguage = Russian;
+            SOGoLoginModule = Mail;
+            SOGoLongDateFormat = "%A, %B %d, %Y";
+            SOGoMailAutoSave = <*I0>;
+            SOGoMailComposeFontSize = <*I0>;
+            SOGoMailComposeMessageType = html;
+            SOGoMailDisplayRemoteInlineImages = never;
+            SOGoMailLabelsColors = {
+                "$label1" = (
+                    Important,
+                    "#FF0000"
+                );
+                "$label2" = (
+                    Work,
+                    "#FF9900"
+                );
+                "$label3" = (
+                    Personal,
+                    "#009900"
+                );
+                "$label4" = (
+                    "To Do",
+                    "#3333FF"
+                );
+                "$label5" = (
+                    Later,
+                    "#993399"
+                );
+            };
+            SOGoMailMessageForwarding = inline;
+            SOGoMailReceiptAllow = 1;
+            SOGoMailReceiptAnyAction = ignore;
+            SOGoMailReceiptNonRecipientAction = ignore;
+            SOGoMailReceiptOutsideDomainAction = ignore;
+            SOGoMailReplyPlacement = below;
+            SOGoMailSignaturePlacement = below;
+            SOGoRefreshViewCheck = manually;
+            SOGoRememberLastModule = <*I0>;
+            SOGoSelectedAddressBook = personal;
+            SOGoShortDateFormat = "%d-%b-%y";
+            SOGoTimeFormat = "%H:%M";
+            SOGoTimeZone = "Europe/Moscow";
+            Vacation = {
+                autoReplyEmailAddresses = (
+                    "dod@mosreg.ru"
+                );
+                daysBetweenResponse = <*I7>;
+                endDate = <*I0>;
+                endDateEnabled = <*I0>;
+                startDate = <*I0>;
+                startDateEnabled = <*I0>;
+            };
+            locale = {
+                days = (
+                    Sunday,
+                    Monday,
+                    Tuesday,
+                    Wednesday,
+                    Thursday,
+                    Friday,
+                    Saturday
+                );
+                months = (
+                    January,
+                    February,
+                    March,
+                    April,
+                    May,
+                    June,
+                    July,
+                    August,
+                    September,
+                    October,
+                    November,
+                    December
+                );
+                shortDays = (
+                    Sun,
+                    Mon,
+                    Tue,
+                    Wed,
+                    Thu,
+                    Fri,
+                    Sat
+                );
+                shortMonths = (
+                    Jan,
+                    Feb,
+                    Mar,
+                    Apr,
+                    May,
+                    Jun,
+                    Jul,
+                    Aug,
+                    Sep,
+                    Oct,
+                    Nov,
+                    Dec
+                );
+            };
+        },
+        {
+            Calendar = {
+                EventsFilterState = "view_thismonth";
+                EventsSortingState = (
+                    start,
+                    1
+                );
+                FoldersOrder = (
+                    personal
+                );
+                SelectedList = eventsListView;
+                TasksFilterState = "view_incomplete";
+                TasksSortingState = (
+                    status,
+                    1
+                );
+                View = multicolumndayview;
+            };
+            Contact = {
+                SortingState = (
+                    "c_cn",
+                    1
+                );
+            };
+            Mail = {
+                ExpandedFolders = (
+                    "/0",
+                    "/0/folderINBOX"
+                );
+                SortingState = (
+                    size,
+                    0
+                );
+            };
+            ShowCompletedTasks = 0;
+        }
+    );
+    tables = {
+        "/Users/dod/Calendar/personal" = {
+            acl = {
+            };
+            displayname = "Personal Calendar";
+            records = (
+                {
+                    "c_content" = "BEGIN:VCALENDAR
+PRODID:-//Inverse inc./SOGo 3.1.4//EN
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:Europe/Moscow
+X-LIC-LOCATION:Europe/Moscow
+BEGIN:STANDARD
+TZOFFSETFROM:+0300
+TZOFFSETTO:+0300
+TZNAME:MSK
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:1B2E-5788FB00-1-6DD91F80
+SUMMARY:hello Kitty
+LOCATION:HereKitty
+DESCRIPTION:meet with \U041A\U0430\U0442\U0435\U0440\U0438\U043D\U0430
+CLASS:PUBLIC
+X-SOGO-SEND-APPOINTMENT-NOTIFICATIONS:NO
+RRULE:FREQ=WEEKLY
+DTSTART;TZID=Europe/Moscow:20160715T160000
+DTEND;TZID=Europe/Moscow:20160715T170000
+CREATED:20160715T150208Z
+DTSTAMP:20160715T150208Z
+LAST-MODIFIED:20160715T150208Z
+END:VEVENT
+END:VCALENDAR";
+                    "c_name" = "1B2E-5788FB00-1-6DD91F80.ics";
+                }
+            );
+        };
+        "/Users/dod/Contacts/personal" = {
+            acl = {
+            };
+            displayname = "Personal Address Book";
+            records = (
+                {
+                    "c_content" = "BEGIN:VCARD
+FN:(null)
+EMAIL:KlemeshevAV@mosreg.ru
+VERSION:3.0
+END:VCARD";
+                    "c_name" = contacts;
+                }
+            );
+        };
+    };
+}
