@@ -64,9 +64,9 @@ mkdir -p "$readpst_location"
 readpst -w -o "$readpst_location" -r -D "$PST_LOCATION"
 
 # For debugging:
-READPST_ROOT_ORIG="$(mktemp --directory "$READPST_ROOT".orig.XXXXXXXX)"
-readonly READPST_ROOT_ORIG
-cp -a --reflink=auto "$readpst_location" "$READPST_ROOT_ORIG"/"$PST_LOCATION"
+readpst_location_origdir="$(mktemp --directory "$(dirname "$READPST_ROOT".orig.XXXXXXXX/"$PST_LOCATION")")"
+readonly readpst_location_origdir
+cp -a --reflink=auto "$readpst_location" -t "$readpst_location_origdir"
 
 # :DIRNAME=mbox is to match the layout of "readpst -r".
 # (This will create folders as named in the PST file,
@@ -84,4 +84,4 @@ dsync -v \
 
 # Debugging:
 printf '%s: The UNWANTED differences that dsync has written to the source PST dir:\n'
-diff -r "$READPST_ROOT_ORIG"/"$PST_LOCATION" "$readpst_location"
+diff -r "$readpst_location_origdir"/"$(basename "$PST_LOCATION")" "$readpst_location"
